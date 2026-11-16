@@ -1,0 +1,67 @@
+# Chat commands that make something happen in a game.
+#
+#   name           chat command without the slash ("heal" -> /heal)
+#   game           which connected game gets it (the "game" id its mod sends in hello)
+#   action         the action name the mod implements
+#   cost           points it costs; refunded if the game rejects it, fails, or doesn't answer
+#   cooldown_secs  seconds before anyone can use this command again (optional, default 0)
+#   params         fixed values sent with the action; viewers can't change them (optional)
+#   description    shown by /help and GET /games (optional)
+#
+# A command only works while its game is connected and lists the action in its hello.
+# Restart the server after editing.
+
+# ---- Slay the Spire 2 (game id "sts2") -------------------------------------
+# The mod must implement these action names. See docs/STS2_MOD.md.
+
+[[command]]
+name = "heal"
+game = "sts2"
+action = "heal"
+cost = 30
+cooldown_secs = 30
+params = { amount = 5 }
+description = "Heal the streamer for 5 HP"
+
+[[command]]
+name = "hurt"
+game = "sts2"
+action = "damage"
+cost = 30
+cooldown_secs = 30
+params = { amount = 5 }
+description = "Deal 5 damage to the streamer"
+
+[[command]]
+name = "gold"
+game = "sts2"
+action = "gain_gold"
+cost = 20
+cooldown_secs = 20
+params = { amount = 25 }
+description = "Give the streamer 25 gold"
+
+[[command]]
+name = "block"
+game = "sts2"
+action = "gain_block"
+cost = 15
+cooldown_secs = 15
+params = { amount = 8 }
+description = "Give the streamer 8 block (combat only)"
+
+[[command]]
+name = "potion"
+game = "sts2"
+action = "random_potion"
+cost = 40
+cooldown_secs = 60
+description = "Give the streamer a random potion"
+
+[[command]]
+name = "curse"
+game = "sts2"
+action = "add_curse"
+cost = 80
+cooldown_secs = 120
+description = "Add a random curse to the streamer's deck"

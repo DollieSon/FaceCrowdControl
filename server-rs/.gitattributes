@@ -1,0 +1,4 @@
+# sqlx checksums each migration file (byte for byte) and refuses to start if one that
+# already ran has changed. Keep them LF on every checkout so Windows line-ending
+# conversion can't make an unchanged migration look edited.
+migrations/**/*.sql text eol=lf

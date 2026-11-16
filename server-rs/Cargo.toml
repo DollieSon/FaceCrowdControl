@@ -1,0 +1,30 @@
+[package]
+name = "fcc-server"
+version = "2.0.0"
+edition = "2024"
+rust-version = "1.88"
+description = "FaceCrowdControl v2 server: hub between live-stream chat and games"
+publish = false
+
+[dependencies]
+anyhow = "1"
+async-trait = "0.1"
+axum = { version = "0.8", features = ["ws"] }
+chrono = { version = "0.4", features = ["serde"] }
+clap = { version = "4", features = ["derive", "env"] }
+dotenvy = "0.15"
+futures-util = { version = "0.3", default-features = false, features = ["sink", "std"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# Both drivers are always compiled in; DATABASE_URL picks one at runtime.
+sqlx = { version = "0.8", default-features = false, features = ["runtime-tokio", "sqlite", "postgres", "chrono", "migrate", "macros"] }
+thiserror = "2"
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "signal", "time", "sync", "net"] }
+toml = "0.9"
+tower-http = { version = "0.6", features = ["trace", "limit"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+[dev-dependencies]
+tokio-tungstenite = "0.28"
+reqwest = { version = "0.12", default-features = false, features = ["json"] }

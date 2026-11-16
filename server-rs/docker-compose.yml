@@ -1,0 +1,36 @@
+# SQLite (default):   docker compose up --build
+# Postgres:           set COMPOSE_DATABASE_URL in .env (see .env.example), then
+#                     docker compose --profile postgres up --build
+services:
+  server:
+    build: .
+    ports:
+      # Published on 127.0.0.1 by default so only this PC can reach the server.
+      - "${BIND_ADDRESS:-127.0.0.1}:${PORT:-3000}:${PORT:-3000}"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      # Inside the container the server must listen on all interfaces; the port mapping
+      # above decides who can actually reach it.
+      BIND_ADDRESS: 0.0.0.0
+      DATABASE_URL: ${COMPOSE_DATABASE_URL:-sqlite://data/fcc.db}
+    volumes:
+      - server_data:/app/data
+      - ./games.toml:/app/games.toml:ro
+    restart: unless-stopped
+
+  db:
+    image: postgres:17-alpine
+    profiles: [postgres]
+    environment:
+      POSTGRES_USER: ${PGUSER:-user}
+      POSTGRES_PASSWORD: ${PGPASSWORD:-password}
+      POSTGRES_DB: ${PGDATABASE:-facecrowdcontrol_v2}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  server_data:
+  postgres_data:
