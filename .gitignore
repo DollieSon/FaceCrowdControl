@@ -6,3 +6,6 @@ node_modules
 extension/src/config.json
 extension/web-ext-artifacts/
 extension/.amo-upload-uuid
+# Decompiled third-party StS2 mods: local reference only, never commit (other authors' code).
+games/sts2/decomps/
+games/sts2/mod_content.json
