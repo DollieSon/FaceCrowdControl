@@ -1,0 +1,55 @@
+<!--
+  SYNTHETIC fixture: hand-written to mirror the *shape* of Facebook's comment
+  markup (role="article" + "Comment by" aria-label, avatar link, name link,
+  div[dir=auto] body, timestamp link carrying comment_id). It is NOT a copy of
+  real Facebook HTML. Replace or extend it with a real "Copy -> Outer HTML"
+  sample from a live chat so the tests catch real markup changes.
+-->
+<div id="video-post" role="article" aria-label="Juan's Page is live now">
+  <a href="https://www.facebook.com/juanspage"><span>Juan's Page</span></a>
+  <div dir="auto">Playing Isaac with chat! Type /give to share points.</div>
+</div>
+
+<div id="chat">
+  <!-- numeric profile id, comment_id on the timestamp link -->
+  <div id="c1" role="article" aria-label="Comment by Maria Santos 1 minute ago" tabindex="-1">
+    <a href="/profile.php?id=100012345678&amp;comment_id=Y29tbWVudDoxMjM%3D&amp;__cft__[0]=AZX" aria-hidden="true"><svg><image></image></svg></a>
+    <div>
+      <div>
+        <span><a href="/profile.php?id=100012345678&amp;comment_id=Y29tbWVudDoxMjM%3D&amp;__tn__=R]-R" role="link"><span><span dir="auto">Maria Santos</span></span></a></span>
+        <div dir="auto" style="text-align: start;">/give #42 50</div>
+      </div>
+      <ul>
+        <li><div role="button">Like</div></li>
+        <li><div role="button">Reply</div></li>
+        <li><a href="https://www.facebook.com/juanspage/videos/987/?comment_id=Y29tbWVudDoxMjM%3D"><span>1m</span></a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- vanity username, emoji as <img alt>, multi-line body, no comment_id anywhere -->
+  <div id="c2" role="article" aria-label="Comment by Juan Dela Cruz 30 seconds ago">
+    <a href="https://www.facebook.com/juan.dc?__cft__[0]=AZY" aria-hidden="true"><svg></svg></a>
+    <a href="https://www.facebook.com/juan.dc?__cft__[0]=AZY" role="link"><span dir="auto">Juan Dela Cruz</span></a>
+    <div dir="auto" style="text-align: start;">gg <img alt="😂" src="x.png"> nice run<br>second line</div>
+    <div role="button">Like</div>
+  </div>
+
+  <!-- body contains a mention link; the mention text must stay in the message -->
+  <div id="c3" role="article" aria-label="Comment by Ana Reyes 10 seconds ago">
+    <a href="/people/Ana-Reyes/100099/" role="link"><span dir="auto">Ana Reyes</span></a>
+    <div dir="auto" style="text-align: start;">hi <a href="/profile.php?id=100012345678">Maria Santos</a> thanks!</div>
+
+    <!-- nested reply: must not leak into Ana's comment -->
+    <div id="r1" role="article" aria-label="Reply by Maria Santos 5 seconds ago">
+      <a href="/profile.php?id=100012345678&amp;reply_comment_id=cmVwbHk6OTk%3D" role="link"><span dir="auto">Maria Santos</span></a>
+      <div dir="auto">welcome</div>
+    </div>
+  </div>
+
+  <!-- sticker-only comment: no text, should be ignored -->
+  <div id="c4" role="article" aria-label="Comment by Leo Cruz just now">
+    <a href="/leo.cruz" role="link"><span dir="auto">Leo Cruz</span></a>
+    <div><img src="sticker.png" alt=""></div>
+  </div>
+</div>

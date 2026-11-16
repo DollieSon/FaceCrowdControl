@@ -1,0 +1,18 @@
+{
+    "name": "facecrowdcontrol-extension",
+    "version": "0.1.0",
+    "private": true,
+    "description": "Firefox extension that reads live chat comments and sends them to the FaceCrowdControl server",
+    "scripts": {
+        "config": "node scripts/sync-env.mjs",
+        "start": "npm run config && web-ext run --source-dir src",
+        "lint": "web-ext lint --source-dir src",
+        "build": "npm run config && web-ext build --source-dir src --overwrite-dest",
+        "sign": "npm run config && web-ext sign --source-dir src --channel=unlisted",
+        "test": "node --test \"test/*.test.*\""
+    },
+    "devDependencies": {
+        "jsdom": "^31.0.1",
+        "web-ext": "^10.8.0"
+    }
+}

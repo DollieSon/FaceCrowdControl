@@ -1,14 +1,24 @@
-async function givePointsToUser(dbclient, userName, targetId, points) {
+async function givePointsToUser(dbclient, sender, targetId, points) {
     // This function will give points to a user
-    // first check for the users points
+    // `sender` is the sender's users row; they're identified by id, never by display name.
+    const userName = sender.name;
     console.log(`Giving ${points} points from ${userName} to ${targetId}`);
-    
-    // Convert points to a number
+
+    // Accept "42" or "#42" as the target id.
+    targetId = String(targetId).replace(/^#/, '');
+    if (!/^\d+$/.test(targetId)) {
+        throw new Error('Target must be a user id number, e.g. /give #42 10');
+    }
+    // Whole positive amounts only: a negative amount would take points from the target.
+    if (!/^\d+$/.test(String(points)) || parseInt(points, 10) <= 0) {
+        throw new Error('Amount must be a positive whole number');
+    }
     points = parseInt(points, 10);
-    
+    targetId = parseInt(targetId, 10);
+
     try {
-        const text = `SELECT id, point FROM users WHERE name = $1`;
-        const values = [userName];
+        const text = `SELECT id, point FROM users WHERE id = $1`;
+        const values = [sender.id];
 
         const result = await dbclient.query(text, values);
         if (result.rows.length === 0) {

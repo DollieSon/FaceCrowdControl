@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>FaceCrowdControl</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <header>
+        <h1>FaceCrowdControl</h1>
+        <label class="switch" title="Send live chat comments to the server">
+            <input type="checkbox" id="enabled">
+            <span class="track"></span>
+            <span class="label">Capture</span>
+        </label>
+    </header>
+
+    <section id="permissions" class="warning" hidden>
+        <p>Firefox hasn't granted access to Facebook or to the server yet.</p>
+        <button id="grant">Grant access</button>
+    </section>
+
+    <section>
+        <h2>Server</h2>
+        <div class="row">
+            <span class="dot" id="server-dot"></span>
+            <span id="server-status">Checking…</span>
+            <button id="check" class="small">Check</button>
+        </div>
+        <div class="muted mono" id="server-url"></div>
+    </section>
+
+    <section>
+        <h2>This tab</h2>
+        <div class="row">
+            <span class="dot" id="tab-dot"></span>
+            <span id="tab-status">…</span>
+        </div>
+        <dl class="stats" id="tab-stats" hidden>
+            <dt>Captured</dt><dd id="tab-captured">0</dd>
+            <dt>Sent</dt><dd id="tab-sent">0</dd>
+            <dt>Waiting</dt><dd id="tab-queued">0</dd>
+            <dt>Skipped</dt><dd id="tab-skipped" title="Comments already on screen when capture started, or repeats">0</dd>
+        </dl>
+    </section>
+
+    <section>
+        <h2>Overall</h2>
+        <dl class="stats">
+            <dt>Sent total</dt><dd id="sent-total">0</dd>
+            <dt>Last sent</dt><dd id="last-sent">never</dd>
+        </dl>
+        <p class="error" id="last-error" hidden></p>
+    </section>
+
+    <footer>
+        <label class="switch small" title="Outline comments on the page: green = sent, grey dashed = skipped. Also logs to the console.">
+            <input type="checkbox" id="highlight">
+            <span class="track"></span>
+            <span class="label">Highlight captured comments</span>
+        </label>
+    </footer>
+
+    <script src="popup.js"></script>
+</body>
+</html>

@@ -2,19 +2,25 @@ services:
   server:
     build: .
     ports:
-      - "3000:3000"
+      # Published on 127.0.0.1 by default so only this PC can reach the server.
+      - "${BIND_ADDRESS:-127.0.0.1}:${PORT:-3000}:${PORT:-3000}"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      PGHOST: db
     # depends_on:
       # - db
     volumes:
     # for TBOI
-      - "C:/Manual_D/Steam/steamapps/common/The Binding of Isaac Rebirth/mods/FBCrowdControl/data:/app/data"
-  
+      - "${ISAAC_MOD_DATA_DIR:-C:/Manual_D/Steam/steamapps/common/The Binding of Isaac Rebirth/mods/FBCrowdControl/data}:/app/data"
+
   db:
     image: postgres:latest
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: facecrowdcontrol
+      POSTGRES_USER: ${PGUSER:-user}
+      POSTGRES_PASSWORD: ${PGPASSWORD:-password}
+      POSTGRES_DB: ${PGDATABASE:-facecrowdcontrol}
     volumes:
       - postgres_data:/var/lib/postgresql/data
 

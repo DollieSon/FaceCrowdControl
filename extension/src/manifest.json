@@ -1,0 +1,43 @@
+{
+    "manifest_version": 3,
+    "name": "FaceCrowdControl Chat Reader",
+    "version": "0.1.0",
+    "description": "Reads live chat comments on Facebook and sends them to your local FaceCrowdControl server.",
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "facecrowdcontrol-chat@local",
+            "strict_min_version": "142.0",
+            "data_collection_permissions": {
+                "required": ["none"]
+            }
+        }
+    },
+    "icons": {
+        "48": "icons/icon.svg",
+        "96": "icons/icon.svg"
+    },
+    "permissions": ["storage"],
+    "host_permissions": [
+        "http://127.0.0.1/*",
+        "http://localhost/*"
+    ],
+    "optional_host_permissions": [
+        "http://*/*",
+        "https://*/*"
+    ],
+    "background": {
+        "scripts": ["background.js"]
+    },
+    "action": {
+        "default_title": "FaceCrowdControl",
+        "default_popup": "popup/popup.html",
+        "default_icon": "icons/icon.svg"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://*.facebook.com/*"],
+            "js": ["sites/facebook-parser.js", "sites/facebook.js"],
+            "run_at": "document_idle"
+        }
+    ]
+}
